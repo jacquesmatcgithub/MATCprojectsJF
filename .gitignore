@@ -1,0 +1,16 @@
+build/
+dist/
+docs/project_api/
+output/*.txt
+output/*.dat
+output/*.TXT
+*~
+TEST-*
+lib/analyzer.jar
+lib/java112Labs.jar
+lib/*.war
+lib/*.ear
+
+.DS_Store
+
+hs_err_pid*
