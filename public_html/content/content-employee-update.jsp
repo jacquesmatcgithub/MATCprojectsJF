@@ -28,7 +28,7 @@
                     <tr><td>Phone</td>
                         <td><input type="text" value="${employee.phone}" name="phoneNumber" size="30" maxlength="10"></td>
                     </tr>
-                    <tr><td><br /><input type="submit" value="Add"></td></tr>
+                    <tr><td><br /><input type="submit" value="Update"></td></tr>
                 </table>
             </form>
         </c:forEach>

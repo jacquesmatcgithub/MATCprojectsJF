@@ -18,6 +18,12 @@ public class EmployeeDirectory implements PropertiesLoaderInterface {
     private static final String SQL_INSERT =
         "INSERT INTO employees (first_name, last_name, ssn, " +
         "dept, room, phone) VALUES (?,?,?,?,?,?)";
+
+    private static final String SQL_UPDATE =
+        "UPDATE employees SET " +
+        "first_name = ?, last_name = ?, ssn = ?, dept = ?, room = ?, phone = ? " +
+        "WHERE emp_id = ?";
+
     private static final String COMMON_SELECT_SQL_SNIPPET =
         "SELECT emp_id, first_name, last_name, ssn, dept, room, phone " +
         "FROM employees WHERE ";
@@ -110,6 +116,71 @@ public class EmployeeDirectory implements PropertiesLoaderInterface {
             preparedStatement.execute();
 
             message = "Employee " + firstName + " " + lastName + " added successfully";
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return message;
+    }
+
+
+    /**
+     * The addEmployee method adds an employee to the database.
+     * @param empid Employee ID
+     * @param firstName Employee first name
+     * @param lastName Employee last name
+     * @param socialSecurityNumber Employee social securiry number
+     * @param department Department where employee works
+     * @param roomNumber Room where employee is located
+     * @param phoneNumber Employee phone number
+     * @return String Message if the employee was added or not.
+     */
+    public String updateEmployee(int empid,
+                                 String firstName,
+                                 String lastName,
+                                 String socialSecurityNumber,
+                                 String department,
+                                 String roomNumber,
+                                 String phoneNumber) {
+
+        String message = "Database Error";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = connectToDB();
+
+            preparedStatement = connection.prepareStatement(SQL_UPDATE);
+
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, socialSecurityNumber);
+            preparedStatement.setString(4, department);
+            preparedStatement.setString(5, roomNumber);
+            preparedStatement.setString(6, phoneNumber);
+            preparedStatement.setInt(7, empid);
+
+            preparedStatement.execute();
+
+            message = "Employee " + firstName + " " + lastName + " updated successfully";
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
