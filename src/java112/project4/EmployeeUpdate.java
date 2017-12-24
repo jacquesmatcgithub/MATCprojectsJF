@@ -19,7 +19,9 @@ import javax.servlet.annotation.*;
         name = "employeeUpdate",
         urlPatterns = { "/Project4Update" }
 )
-public class EmployeeUpdate {
+
+public class EmployeeUpdate extends HttpServlet {
+
     /**
      *  Handles HTTP GET requests.
      *
@@ -37,12 +39,11 @@ public class EmployeeUpdate {
 
         ServletContext servletContext = getServletContext();
 
-        Properties properties =
-                (Properties)servletContext.getAttribute("project4Properties");
+        Properties properties = (Properties)servletContext.getAttribute("project4Properties");
 
-        EmployeeDirectory employeeDirectory =
-                (EmployeeDirectory)servletContext.getAttribute("employeeDirectory");
+        EmployeeDirectory employeeDirectory = (EmployeeDirectory)servletContext.getAttribute("employeeDirectory");
 
+        int empId = Integer.parseInt(request.getParameter("empId").trim());
         String firstName = request.getParameter("firstName").trim();
         String lastName = request.getParameter("lastName").trim();
         String employeeSSN = request.getParameter("employeeSSN").trim();
@@ -51,21 +52,20 @@ public class EmployeeUpdate {
         String phoneNumber =request.getParameter("phoneNumber").trim();
 
         String returnMessage = validateForm(firstName, lastName, employeeSSN,
-                department, roomNumber, phoneNumber,
-                properties);
+                department, roomNumber, phoneNumber, properties);
 
         if (!returnMessage.equals("")) {
-            session.setAttribute("project4UpdateMessage", returnMessage);
-            redirectToEmployeeAddPage(response);
+            session.setAttribute("project4SearchMessage", returnMessage);
+            redirectToEmployeeSearchPage(response);
             return;
         }
 
-        String message = employeeDirectory.addEmployee(firstName, lastName,
+        String message = employeeDirectory.updateEmployee(empId, firstName, lastName,
                 employeeSSN, department, roomNumber, phoneNumber);
 
-        session.setAttribute("project4UpdateMessage", message);
+        session.setAttribute("project4SearchMessage", message);
 
-        redirectToEmployeeAddPage(response);
+        redirectToEmployeeSearchPage(response);
     }
 
 
@@ -99,16 +99,17 @@ public class EmployeeUpdate {
 
 
     /**
-     * The redirectToEmployeeAddPage method redirects control to the employee
+     * The redirectToEmployeeSearchPage method redirects control to the employee
      * add page.
      * @param  response              the HttpResponse
      * @throws ServletException If there is a general servlet exception.
      * @throws IOException If there is a general I/O exception.
      */
-    public void redirectToEmployeeAddPage(HttpServletResponse response)
+    public void redirectToEmployeeSearchPage(HttpServletResponse response)
             throws ServletException, IOException {
-        String url = "Project4EmployeeAddServlet";
+        String url = "Project4EmployeeSearchServlet";
 
         response.sendRedirect(url);
+
     }
 }

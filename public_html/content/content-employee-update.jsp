@@ -10,6 +10,9 @@
         <c:forEach var="employee" items="${searchResults}">
             <form method="POST" action="Project4Update">
                 <table cellspacing="10">
+                    <tr><td>Emoployee ID</td>
+                        <td><input type="text" value="${employee.employeeId}" name="empId" size="4" maxlength="25" readonly></td>
+                    </tr>
                     <tr><td>First Name</td>
                         <td><input type="text" value="${employee.firstName}" name="firstName" size="30" maxlength="25" autofocus></td>
                     </tr>

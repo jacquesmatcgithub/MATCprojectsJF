@@ -1,8 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<div id="content" style="padding-left:10px">
+    <h2>Employee Search</h2>
+    <h3>${project4SearchMessage}</h3>
+    <br />
+</div>
+
+<c:set var="project4SearchMessage" value="" scope="session" />
+
 <div id="content" style="padding-left:10px;">
-  <h2>Employee Search</h2>
-  <br />
   <form action="Project4Search" method="GET">
     <table>
       <tr>
