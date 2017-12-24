@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="analyzer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/WEB-INF/lib/analyzer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

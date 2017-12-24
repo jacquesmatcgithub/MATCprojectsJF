@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/java-hamcrest.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/analyzer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java112Tests.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hamcrest.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jdbc_lab.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java112Labs.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/annotations-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/java112Demos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

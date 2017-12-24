@@ -22,6 +22,8 @@ import javax.servlet.annotation.*;
 
 public class EmployeeSearch extends HttpServlet {
 
+    private static final String SEARCH_BY_ID = "ID";
+
     /**
      *  Handles HTTP GET requests.
      *
@@ -37,13 +39,11 @@ public class EmployeeSearch extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-//        ServletContext servletContext = request.getSession().getServletContext();
         ServletContext servletContext = getServletContext();
 
         Properties properties = (Properties)servletContext.getAttribute("project4Properties");
 
-        EmployeeDirectory employeeDirectory =
-            (EmployeeDirectory)servletContext.getAttribute("employeeDirectory");
+        EmployeeDirectory employeeDirectory = (EmployeeDirectory)servletContext.getAttribute("employeeDirectory");
 
         String searchTerm = request.getParameter("searchTerm").trim();
         String searchType = request.getParameter("searchType");
@@ -60,8 +60,7 @@ public class EmployeeSearch extends HttpServlet {
         search = employeeDirectory.searchEmployee(searchTerm, searchType);
 
         if (!search.getEmployeeFound()) {
-            session.setAttribute("searchmessage",
-                properties.getProperty("msg.employee.not.found"));
+            session.setAttribute("searchmessage", properties.getProperty("msg.employee.not.found"));
             forwardToEmployeeSearchPage(request, response);
             return;
         }
@@ -73,7 +72,11 @@ public class EmployeeSearch extends HttpServlet {
 
         servletContext.setAttribute("searchResults", results);
 
-        forwardToEmployeeSearchPage(request, response);
+        if (searchType.equals(SEARCH_BY_ID)) {
+            forwardToEmployeeUpdatePage(request, response);
+        } else {
+            forwardToEmployeeSearchPage(request, response);
+        }
     }
 
 
@@ -105,6 +108,26 @@ public class EmployeeSearch extends HttpServlet {
         throws ServletException, IOException {
 
         String url = "/jsp/employee-search-results.jsp";
+
+        RequestDispatcher  dispatcher =
+                getServletContext().getRequestDispatcher(url);
+        dispatcher.forward(request, response);
+    }
+
+
+    /**
+     * The forwardToEmployeeUpdatePage method forwards control to the
+     * employee update page.
+     * @param  request               the HttpRequest
+     * @param  response              the HttpResponse
+     * @exception  ServletException  if there is a general servlet exception
+     * @exception  IOException       if there is a general I/O exception
+     */
+    public void forwardToEmployeeUpdatePage(HttpServletRequest request,
+                                            HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String url = "/jsp/employee-update.jsp";
 
         RequestDispatcher  dispatcher =
                 getServletContext().getRequestDispatcher(url);
